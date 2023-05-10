@@ -29,9 +29,15 @@ class _HomePageState extends State<HomePage> {
     return FutureBuilder(
       future: listOfNews(),
       builder: (BuildContext context, AsyncSnapshot<List<Datum>> snapshot) {
-        return ListView(
-          children: newsDesigns(snapshot.data!),
-        );
+        if (snapshot.hasData == true) {
+          return ListView(
+            children: newsDesigns(snapshot.data!),
+          );
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
       },
     );
   }
@@ -40,7 +46,9 @@ class _HomePageState extends State<HomePage> {
     var widgets = <Widget>[];
 
     for (var data in datas) {
-      var widget = DataHandling();
+      var widget = DataHandling(
+        datum: data,
+      );
       widgets.add(widget);
     }
 
