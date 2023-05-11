@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:media_stack/model/news_model.dart';
-import 'package:media_stack/service/news_services.dart';
+import 'package:media_stack/service/service.dart';
 
-import 'data_handling.dart';
+import 'artcile_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -47,10 +47,11 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget getBody() {
+  Widget getHomePage() {
     return FutureBuilder(
       future: listOfNews(),
-      builder: (BuildContext context, AsyncSnapshot<List<Datum>> snapshot) {
+      builder:
+          (BuildContext context, AsyncSnapshot<List<NewsArticle>> snapshot) {
         if (snapshot.hasData == true) {
           return ListView(
             children: newsDesigns(snapshot.data!),
@@ -64,12 +65,32 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  List<Widget> newsDesigns(List<Datum> datas) {
+  Widget getBody(){
+    switch (currentIndex) {
+      case 0:
+      return getHomePage();
+      case 1:
+      return getBookMark();
+      case 2:
+      return getSearch();   
+    }
+    return getBody();
+  }
+
+  Widget getBookMark() {
+    return getBookMark();
+  }
+
+  Widget getSearch() {
+    return getSearch();
+  }
+
+  List<Widget> newsDesigns(List<NewsArticle> datas) {
     var widgets = <Widget>[];
 
     for (var data in datas) {
-      var widget = DataHandling(
-        datum: data,
+      var widget = articleWidget(
+        newsArticle: data,
       );
       widgets.add(widget);
     }

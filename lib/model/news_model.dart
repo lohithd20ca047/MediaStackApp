@@ -5,7 +5,7 @@ class NewsModel {
   });
 
   final Pagination? pagination;
-  final List<Datum> data;
+  final List<NewsArticle> data;
 
   factory NewsModel.fromJson(Map<String, dynamic> json) {
     return NewsModel(
@@ -14,7 +14,7 @@ class NewsModel {
           : Pagination.fromJson(json["pagination"]),
       data: json["data"] == null
           ? []
-          : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+          : List<NewsArticle>.from(json["data"]!.map((x) => NewsArticle.fromJson(x))),
     );
   }
 
@@ -24,8 +24,8 @@ class NewsModel {
       };
 }
 
-class Datum {
-  Datum({
+class NewsArticle {
+  NewsArticle({
     required this.author,
     required this.title,
     required this.description,
@@ -49,8 +49,8 @@ class Datum {
   final String? country;
   final DateTime? publishedAt;
 
-  factory Datum.fromJson(Map<String, dynamic> json) {
-    return Datum(
+  factory NewsArticle.fromJson(Map<String, dynamic> json) {
+    return NewsArticle(
       author: json["author"],
       title: json["title"],
       description: json["description"],
