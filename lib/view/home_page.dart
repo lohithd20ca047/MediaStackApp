@@ -12,17 +12,39 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Center(
-              child: Text(
-            'NewsToday',
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-          )),
-        ),
-        body: getBody());
+      appBar: AppBar(
+        title: const Center(
+            child: Text(
+          'NewsToday',
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+        )),
+      ),
+      body: getBody(),
+      bottomNavigationBar: BottomNavigationBar(
+          currentIndex: currentIndex,
+          onTap: (index) => setState(() {
+                currentIndex = index;
+              }),
+          showUnselectedLabels: false,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home_outlined),
+              label: 'HOME',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite),
+              label: 'LIKE',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: 'SEARCH',
+            )
+          ]),
+    );
   }
 
   Widget getBody() {

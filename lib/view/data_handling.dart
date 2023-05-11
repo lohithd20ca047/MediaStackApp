@@ -11,8 +11,41 @@ class DataHandling extends StatefulWidget {
 class _DataHandlingState extends State<DataHandling> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [Text(widget.datum!.title!)],
+    return SizedBox(
+      height: 250,
+      width: 150,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Card(
+          margin: const EdgeInsets.all(10),
+          elevation: 10,
+          shadowColor: Colors.cyan,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Text(widget.datum!.title!,
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.bold),
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 130),
+                child: GestureDetector(
+                  onTap: () {},
+                  child: Text(
+                    widget.datum!.url!,
+                    style: const TextStyle(fontSize: 8, color: Colors.blue),
+                    maxLines: 1,
+                    overflow: TextOverflow.clip,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
