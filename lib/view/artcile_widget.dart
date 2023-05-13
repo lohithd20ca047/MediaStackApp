@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:media_stack/model/news_model.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'browse_widget.dart';
 
@@ -58,7 +59,16 @@ class _articleWidgetState extends State<articleWidget> {
                       ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: const [Icon(Icons.share), Icon(Icons.favorite)],
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.share),
+                      onPressed: () {
+                        Share.share(widget.newsArticle!.url!,
+                            subject: 'Look what I made!');
+                      },
+                    ),
+                    const Icon(Icons.favorite)
+                  ],
                 )
               ],
             ),
