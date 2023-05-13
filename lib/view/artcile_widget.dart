@@ -15,18 +15,24 @@ class _articleWidgetState extends State<articleWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 250,
+      height: 500,
       width: 150,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: GestureDetector( onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return BrowserWidget(newsArticle: widget.newsArticle);
-        },));},
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) {
+                return BrowserWidget(newsArticle: widget.newsArticle);
+              },
+            ));
+          },
           child: Card(
             margin: const EdgeInsets.all(10),
             elevation: 10,
             shadowColor: Colors.cyan,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Padding(
                   padding: const EdgeInsets.all(10),
@@ -35,12 +41,25 @@ class _articleWidgetState extends State<articleWidget> {
                           fontSize: 18, fontWeight: FontWeight.bold),
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis),
-                ), 
-                CachedNetworkImage(
-        imageUrl: widget.newsArticle!.image!,
-        placeholder: (context, url) => CircularProgressIndicator(),
-        errorWidget: (context, url, error) => Icon(Icons.error),
-     ),         
+                ),
+                widget.newsArticle!.image != null
+                    ? CachedNetworkImage(
+                        imageUrl: widget.newsArticle!.image!,
+                        width: double.infinity,
+                        placeholder: (context, url) =>
+                            const Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) => const Icon(
+                            Icons.image_not_supported_outlined,
+                            size: 190),
+                      )
+                    : const Icon(
+                        Icons.image_not_supported_outlined,
+                        size: 190,
+                      ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: const [Icon(Icons.share), Icon(Icons.favorite)],
+                )
               ],
             ),
           ),
