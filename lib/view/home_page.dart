@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:media_stack/model/news_model.dart';
-import 'package:media_stack/service/service.dart';
-
-import 'artcile_widget.dart';
+import 'package:media_stack/service/bookmarks/bookmark_file_handling.dart';
+import 'package:media_stack/service/news_service.dart';
+import 'package:media_stack/view/search_view.dart';
+import 'news_utility.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -36,7 +37,7 @@ class _HomePageState extends State<HomePage> {
               label: 'HOME',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.favorite),
+              icon: Icon(Icons.favorite_border_outlined),
               label: 'LIKE',
             ),
             BottomNavigationBarItem(
@@ -65,36 +66,35 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget getBody(){
+  Widget getBody() {
     switch (currentIndex) {
       case 0:
-      return getHomePage();
+        return getHomePage();
       case 1:
-      return getBookMark();
+        return getBookMark();
       case 2:
-      return getSearch();   
+        return getSearch();
     }
     return getBody();
   }
 
   Widget getBookMark() {
-    return getBookMark();
+    return FutureBuilder(
+      future: readBookmarks(),
+      builder:
+          (BuildContext context, AsyncSnapshot<List<NewsArticle>> snapshot) {
+        if (!snapshot.hasData) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        return ListView(
+          children: newsDesigns(snapshot.data!),
+        );
+      },
+    );
   }
 
   Widget getSearch() {
-    return getSearch();
-  }
-
-  List<Widget> newsDesigns(List<NewsArticle> datas) {
-    var widgets = <Widget>[];
-
-    for (var data in datas) {
-      var widget = articleWidget(
-        newsArticle: data,
-      );
-      widgets.add(widget);
-    }
-
-    return widgets;
+    return const SearchView();
   }
 }

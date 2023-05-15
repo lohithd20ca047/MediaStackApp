@@ -18,3 +18,22 @@ Future<List<NewsArticle>> listOfNews() async {
   }
   return datas;
 }
+
+
+
+Future<List<NewsArticle>> searchNews(String searchText) async {
+  var datas = <NewsArticle>[];
+  var dio = Dio();
+  var searchUrl = '$mediaUrl&keywords=$searchText';
+  var response = await dio.get(searchUrl);
+  if (response.statusCode == 200) {
+    var mediaDatas = response.data['data'];
+    for (var mediaData in mediaDatas) {
+      var dataObj = NewsArticle.fromJson(mediaData);
+      datas.add(dataObj);
+    }
+  }
+  return datas;
+}
+
+
